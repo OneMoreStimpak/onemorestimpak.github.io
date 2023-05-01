@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Link to Clipboard</title>
+  <style>
+    button {
+      font-size: 16px;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="copyLinkButton">Copy Link</button>
+  <p id="notification" style="display:none;">Link copied to clipboard!</p>
+
+  <script>
+    document.getElementById("copyLinkButton").addEventListener("click", function() {
+      const linkToCopy = "https://www.example.com"; // Replace this with the link you want to copy
+      const textArea = document.createElement("textarea");
+      textArea.value = linkToCopy;
+      textArea.style.position = "fixed"; // Prevents scrolling to the bottom when focusing the textarea
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+        showNotification();
+      } catch (err) {
+        console.error("Unable to copy the link.", err);
+      }
+
+      document.body.removeChild(textArea);
+    });
+
+    function showNotification() {
+      const notification = document.getElementById("notification");
+      notification.style.display = "block";
+      setTimeout(function() {
+        notification.style.display = "none";
+      }, 3000); // Hide the notification after 3 seconds
+    }
+  </script>
+</body>
+</html>
